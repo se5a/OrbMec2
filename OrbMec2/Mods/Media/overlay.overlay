@@ -1,0 +1,21 @@
+template container BorderPanel(Templates/MessageBox)
+{
+	metrics_mode          pixels
+	width                 64
+	height                18
+	material              Core/StatsBlockCenter
+    border_material       Core/StatsBlockBorder
+	border_size           1 1 1 1
+
+	element TextArea(Templates/MessageBox/Body)
+	{
+		metrics_mode  pixels
+		left          2
+		top           3
+		font_name     BlueHighway
+		char_height   16
+		alignment     left
+		colour        0.5 0.7 0.5
+	}
+}
+

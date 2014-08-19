@@ -1,0 +1,17 @@
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\OrbMec2.exe.config
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\OrbMec2.exe
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\OrbMec2.pdb
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\Mogre.dll
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\MOIS.dll
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\NewtMath.dll
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\Newtonsoft.Json.dll
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\FixMath.dll
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\nunit.framework.dll
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\NewtMath.pdb
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\Newtonsoft.Json.pdb
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\Newtonsoft.Json.xml
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\FixMath.pdb
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\bin\x86\Debug\nunit.framework.xml
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\obj\x86\Debug\OrbMec2.csprojResolveAssemblyReference.cache
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\obj\x86\Debug\OrbMec2.exe
+F:\Users\se5a\Documents\Projects-Code\C#\OrbMec2\OrbMec2\obj\x86\Debug\OrbMec2.pdb
