@@ -465,7 +465,7 @@ namespace OrbMec2
                 //Vector3 mvector3OrblinePosition = TranslateMogrePhys.smVector_mVector3(so.OrbLinePoint);
                 Vector3 mvector3OrblinePosition = new Vector3((float)(so.OrbLinePoint.X / distanceScailer), (float)(so.OrbLinePoint.Y / distanceScailer), (float)(so.OrbLinePoint.Z / distanceScailer));
                 //mvector3OrblinePosition *= distanceScailer;
-                if (Trig.distance(so.Position, so.OrbLinePoint) > 1000) //(so.Position.distance(so.OrbLinePoint) > 100e6)//100e6) //draw a line if the object has traveled more than 100000000 physics meters 
+                if (Trig.distance(so.Position, so.OrbLinePoint) > 100000 / distanceScailer) 
                 {
                     //Vector3 scaledOrbPoint = new Vector3((float)(so.OrbLinePoint.X / scaleing_factor), (float)(so.OrbLinePoint.Y / scaleing_factor), (float)(so.OrbLinePoint.Z / scaleing_factor));
                     ManualObject manObj = mSceneMgr.GetManualObject(so.IDName + "_OrbitLine");

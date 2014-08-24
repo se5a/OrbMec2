@@ -1,0 +1,14 @@
+material Jupiter/Jupiter_1024
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture Jupiter_1024.bmp
+                filtering trilinear
+            }
+        }
+    }
+}
