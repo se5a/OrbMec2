@@ -31,11 +31,23 @@ namespace OrbMec2
         }
         public SpaceObject(string ID, double startMass, PointXd startPosition, PointXd startVelocity, PointXd startaccelvec )
         {
+            IDName = ID;
             Mass = startMass;
             Position = startPosition;
             VelocityMetersSecond = startVelocity;
             AccelMetersSecond = startaccelvec;
             ForceNewtons = new PointXd(0, 0, 0);
+        }
+
+        public SpaceObject(SpaceObjectCereal breakfast)
+        {
+            IDName = breakfast.IDName;
+            Mass = breakfast.Mass;
+            Position = new PointXd(breakfast.Position);
+            VelocityMetersSecond = new PointXd(breakfast.VelocityMetersSecond);
+            AccelMetersSecond = new PointXd(0, 0, 0);
+            ForceNewtons = new PointXd(0, 0, 0);
+            OrbLinePoint = new PointXd(breakfast.Position);
         }
 
         public PointXd getForce { get { return SavedForce; } }

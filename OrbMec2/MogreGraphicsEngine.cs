@@ -69,14 +69,19 @@ namespace OrbMec2
 
                 Vector3 scaledsize = new Vector3((float)(gObj.MeshSize / bodySizeScailer), (float)(gObj.MeshSize / bodySizeScailer), (float)(gObj.MeshSize / bodySizeScailer));
 
-                Vector3 scaledpos =  TranslateMogrePhys.smVector_mVector3(sObj.Position);
+                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(gObj.IDName);
+                objNode.AttachObject(objEnt);
+                objNode.Scale(scaledsize);
+
+                Quaternion quat = new Quaternion(gObj.MeshAxis[0], gObj.MeshAxis[1], gObj.MeshAxis[2], gObj.MeshAxis[3]);
+                objNode.Orientation = quat;
+
+                Vector3 scaledpos = TranslateMogrePhys.smVector_mVector3(sObj.Position);
                 scaledpos.x = (float)(scaledpos.x / distanceScailer);
                 scaledpos.y = (float)(scaledpos.y / distanceScailer);
                 scaledpos.z = (float)(scaledpos.z / distanceScailer);
-                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(gObj.IDName, scaledpos);
-                objNode.AttachObject(objEnt);
-                objNode.Scale(scaledsize);
-                
+                objNode.Position = scaledpos;
+
                 SceneNode objNode_Orbitline = mSceneMgr.RootSceneNode.CreateChildSceneNode(gObj.IDName + "_OrbitLine");
 
                 ManualObject orbitline = mSceneMgr.CreateManualObject(gObj.IDName + "_OrbitLine");

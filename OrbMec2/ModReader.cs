@@ -18,9 +18,7 @@ namespace OrbMec2
             List<SpaceObject> spaceObjects = new List<SpaceObject>();
             foreach (SpaceObjectCereal soc in spaceObjectCereals)
             {
-                PointXd startPosition = new PointXd(soc.Position);
-                PointXd startvelocity = new PointXd(soc.VelocityMetersSecond);
-                SpaceObject so = new SpaceObject(soc.IDName, soc.Mass, startPosition, startvelocity);
+                SpaceObject so = new SpaceObject(soc);
                 spaceObjects.Add(so);
             }
             return spaceObjects;
@@ -50,6 +48,6 @@ namespace OrbMec2
         public string IDName { get; set; }
         public string MeshName { get; set; }
         public double MeshSize { get; set; }
-
+        public float[] MeshAxis { get; set; }
     }
 }
