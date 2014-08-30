@@ -25,7 +25,7 @@ namespace OrbMec2
             }
             PhysicsEngine = new OrbMecPysicsEngine();
             PhysicsEngine.SpaceObjects = SpaceObjects;
-            PhysicsEngine.Threaded = false;
+            PhysicsEngine.Threaded = true;
             
             Thread physicsThread = new Thread(new ThreadStart(PhysicsEngine.Run));
             //Thread graphicsThread = new Thread(new ThreadStart(startGraphics));

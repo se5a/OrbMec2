@@ -57,38 +57,40 @@ namespace OrbMec2
 
         private void DoPhysics(int simticklen_s)
         {         
-            int index = 0;
+            //int threads = 8;
+            //int index = 0;
+            int count = SpaceObjects.Count;
             if (Threaded)
             {
-                List<Task> threadedGravEffectTasks = new List<Task>();
-                foreach (SpaceObject so in SpaceObjects)
+
+                Task[] threadedTasks = new Task[count-1];
+                for (int i = 0; i < count-1; i++)
                 {
                     //update grav forces in parallel
-                    threadedGravEffectTasks.Add(Task.Factory.StartNew(() => so.GravEffect(SpaceObjects, index)));
-                    index += 1;
+                    threadedTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[i].GravEffect(SpaceObjects, i)));
                 }
-                Task.WaitAll(threadedGravEffectTasks.ToArray()); //wait till all the grav effects calcs have been done. 
+                Task.WaitAll(threadedTasks); //wait till all the grav effects calcs have been done.               
                 //now grav forces have been calulated we can figure out where the objecs are going to be. 
-                List<Task> threadedMoveTasks = new List<Task>();
-                foreach (SpaceObject so in SpaceObjects)
+
+                for (int i = 0; i < count-1; i++)
                 {
-                    threadedMoveTasks.Add(Task.Factory.StartNew(() => so.Move(simticklen_s)));
+                    threadedTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[i].Move(simticklen_s)));
                 }
-                Task.WaitAll(threadedMoveTasks.ToArray());
+                Task.WaitAll(threadedTasks);
             }
             else //linier non threaded.
-            { 
-                foreach (SpaceObject so in SpaceObjects)
+            {
+                for (int i = 0; i < count-1; i++)
                 {
                     //update grav forces.
-                    so.GravEffect(SpaceObjects, index);
-                    index += 1;
+                    SpaceObjects[i].GravEffect(SpaceObjects, i);
+               
                 }
 
                 //now grav forces have been calulated we can figure out where the objecs are going to be. 
-                foreach (SpaceObject so in SpaceObjects)
+                for (int i = 0; i < count - 1; i++)
                 {
-                    so.Move(simticklen_s);//physics move
+                    SpaceObjects[i].Move(simticklen_s);//physics move
                 }
             }
         }

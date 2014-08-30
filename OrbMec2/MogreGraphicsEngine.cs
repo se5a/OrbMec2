@@ -20,8 +20,8 @@ namespace OrbMec2
 
         protected Camera mCamera;
         protected CameraMan mCameraMan;
-        double distanceScailer = 25e4f;
-        double bodySizeScailer = 25e3f;
+        double distanceScailer = 25e3f;
+        double bodySizeScailer = 25e2f;
         //Dictionary<string, SpaceObject> SpaceObjectsDict;
         GameEngine GameEng;
 

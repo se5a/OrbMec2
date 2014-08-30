@@ -47,6 +47,7 @@ namespace OrbMec2
             VelocityMetersSecond = new PointXd(breakfast.VelocityMetersSecond);
             AccelMetersSecond = new PointXd(0, 0, 0);
             ForceNewtons = new PointXd(0, 0, 0);
+            SavedForce = new PointXd(0, 0, 0);
             OrbLinePoint = new PointXd(breakfast.Position);
         }
 
