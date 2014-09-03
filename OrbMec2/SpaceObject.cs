@@ -11,12 +11,81 @@ namespace OrbMec2
     {
         public string IDName { get; private set; }
         public double Mass { get; private set; }
-        public PointXd Position { get; private set; }
-        public PointXd VelocityMetersSecond { get; private set; }
-        public PointXd AccelMetersSecond { get; private set; }
 
-        protected PointXd ForceNewtons { get; set; }
-        private PointXd SavedForce;
+        private PointXd _Position = new PointXd();
+        public PointXd Position         
+        { 
+            get {
+                lock (_Position)
+                    return _Position;}        
+            set 
+            {
+                lock (_Position)
+                    _Position = value;
+            }             
+        }
+
+        private PointXd _VelocityMetersSecond = new PointXd();
+        public PointXd VelocityMetersSecond
+        {
+            get 
+            { 
+                lock (_VelocityMetersSecond)
+                return _VelocityMetersSecond; 
+            }
+            set
+            {
+                lock (_VelocityMetersSecond)
+                    _VelocityMetersSecond = value;
+            }
+        }
+
+        private PointXd _AccelMetersSecond = new PointXd();
+        public PointXd AccelMetersSecond
+        {
+            get
+            {
+                lock (_AccelMetersSecond)
+                    return _AccelMetersSecond;
+            }
+            set
+            {
+                lock (_AccelMetersSecond)
+                    _AccelMetersSecond = value;
+            }
+        }
+
+        private PointXd _ForceNewtons = new PointXd();
+        protected PointXd ForceNewtons
+        {
+            get 
+            { 
+                lock (_ForceNewtons)
+                    return _ForceNewtons; 
+            }
+            set
+            {
+                lock (_ForceNewtons)
+                    _ForceNewtons = value;
+            }
+        }
+
+        
+        private PointXd _SavedForce = new PointXd();
+        public PointXd SavedForce
+        {
+            get
+            {
+                lock (_SavedForce)
+                    return _SavedForce;
+            }
+            set
+            {
+                lock (_SavedForce)
+                    _SavedForce = value;
+            }
+        } 
+
         public PointXd OrbLinePoint { get; set; }
 
         public SpaceObject(string ID, double startMass, PointXd startPosition, PointXd startVelocity)
@@ -51,7 +120,7 @@ namespace OrbMec2
             OrbLinePoint = new PointXd(breakfast.Position);
         }
 
-        public PointXd getForce { get { return SavedForce; } }
+        
 
         /// <summary>
         /// Calculates the force between obj at myindex and all other objects in spaceobjs. 
@@ -73,25 +142,18 @@ namespace OrbMec2
                 PointXd myforcevec = Trig.intermediatePoint(Position, otherSO.Position, force);
                 PointXd otherforcevec = new PointXd(myforcevec.X * -1, myforcevec.Y * -1, myforcevec.Z * -1);
 
-                lock (otherSO.ForceNewtons)
-                {
-                    otherSO.ForceNewtons += otherforcevec;
-                }
-
-
-                //tempaccelvec.add(myaccelvec);
-                tempforcevec += myforcevec;
-                // *trying to think threadsafe here, 
-                //not really sure what I'm doing, but my thinking is I'm less likely to be 
-                //trying to update the actual forcevec while others threads may be 
-                //attempting to do so at the same time this way. 
+                    //Console.Out.WriteLine(otherSO.IDName + " Force " + otherSO.ForceNewtons.Length + " adding " + otherforcevec.Length);
+                
+                otherSO.ForceNewtons += otherforcevec; //this should lock otherSO.ForceNewtons while adding otherforcevec
+                
+                tempforcevec += myforcevec; //use tempory forcevec while looping so we don't have to use lock. 
 
                 index -= 1; //counting towards zero
             }
-            lock (ForceNewtons)
-            {
-                ForceNewtons += tempforcevec; // see * above
-            }
+
+                //Console.Out.WriteLine(this.IDName + " Force " + ForceNewtons.Length + " adding " + tempforcevec.Length);
+            ForceNewtons += tempforcevec; //this should lock ForceNewtons whild adding tempforcevec
+        
         }
 
         /// <summary>
@@ -106,16 +168,17 @@ namespace OrbMec2
             AccelMetersSecond = NMath.accelVector(Mass, ForceNewtons);
 
             PointXd movethistick_fromvelocity = new PointXd(VelocityMetersSecond);
+            
             VelocityMetersSecond += (AccelMetersSecond * secondsThisTick);
 
             movethistick_fromvelocity *= secondsThisTick; //displacement = velocity * time
 
             PointXd movethistick_fromacceleration = new PointXd(AccelMetersSecond);
             movethistick_fromacceleration *= System.Math.Pow(secondsThisTick, 2) * 0.5; //displacement = acceleration * time^2 / 2
-
             Position += movethistick_fromacceleration + movethistick_fromvelocity;
             SavedForce = new PointXd(ForceNewtons);
             ForceNewtons.ZEROIZE();
+            //Console.Out.WriteLine(this.IDName + " accel " + AccelMetersSecond.Length);
         }
     }
 }

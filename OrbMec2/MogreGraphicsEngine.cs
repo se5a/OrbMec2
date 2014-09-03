@@ -486,7 +486,7 @@ namespace OrbMec2
                     Console.Out.Write("\r Earth " + so.Position + " distanceScale: " + distanceScailer);
                 }
                 
-                Vector3 scaledforcevec = new Vector3((float)(so.getForce.X), (float)(so.getForce.Y), (float)(so.getForce.Z));
+                Vector3 scaledforcevec = new Vector3((float)(so.SavedForce.X), (float)(so.SavedForce.Y), (float)(so.SavedForce.Z));
                 
                 Vector3 scaledaccelvec = new Vector3((float)(so.AccelMetersSecond.X), (float)(so.AccelMetersSecond.Y), (float)(so.AccelMetersSecond.Z));
                 scaledforcevec *= 0.000000000000000001f;

@@ -57,34 +57,34 @@ namespace OrbMec2
 
         private void DoPhysics(int simticklen_s)
         {         
-            //int threads = 8;
-            //int index = 0;
             int count = SpaceObjects.Count;
             if (Threaded)
             {
 
-                Task[] threadedTasks = new Task[count-1];
+                Task[] threadedGravTasks = new Task[count-1];
+                Task[] threadedMoveTasks = new Task[count-1];
                 for (int i = 0; i < count-1; i++)
                 {
                     //update grav forces in parallel
-                    threadedTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[i].GravEffect(SpaceObjects, i)));
+                    threadedGravTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[i].GravEffect(SpaceObjects, i)));
                 }
-                Task.WaitAll(threadedTasks); //wait till all the grav effects calcs have been done.               
+                Task.WaitAll(threadedGravTasks); //wait till all the grav effects calcs have been done.
+                //Console.Out.WriteLine("grav done");
                 //now grav forces have been calulated we can figure out where the objecs are going to be. 
 
                 for (int i = 0; i < count-1; i++)
                 {
-                    threadedTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[i].Move(simticklen_s)));
+                    threadedMoveTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[i].Move(simticklen_s)));
                 }
-                Task.WaitAll(threadedTasks);
+                Task.WaitAll(threadedMoveTasks);
+                //Console.Out.WriteLine("move done");
             }
             else //linier non threaded.
             {
                 for (int i = 0; i < count-1; i++)
                 {
                     //update grav forces.
-                    SpaceObjects[i].GravEffect(SpaceObjects, i);
-               
+                    SpaceObjects[i].GravEffect(SpaceObjects, i);              
                 }
 
                 //now grav forces have been calulated we can figure out where the objecs are going to be. 
