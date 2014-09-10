@@ -66,18 +66,24 @@ namespace OrbMec2
                 for (int i = 0; i < count-1; i++)
                 {
                     //update grav forces in parallel
-                    threadedGravTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[i].GravEffect(SpaceObjects, i)));
+                    int index = i;
+                    threadedGravTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[index].GravEffect(SpaceObjects, index)));
+                    //threadedGravTasks[i] = (Task.Run(() => SpaceObjects[i].GravEffect(SpaceObjects, i)));
                 }
                 Task.WaitAll(threadedGravTasks); //wait till all the grav effects calcs have been done.
+                
                 //Console.Out.WriteLine("grav done");
                 //now grav forces have been calulated we can figure out where the objecs are going to be. 
 
-                for (int i = 0; i < count-1; i++)
+                for (int i = 0; i < count - 1; i++)
                 {
-                    threadedMoveTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[i].Move(simticklen_s)));
+                    int index = i;
+                    threadedMoveTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[index].Move(simticklen_s)));
                 }
                 Task.WaitAll(threadedMoveTasks);
                 //Console.Out.WriteLine("move done");
+
+
             }
             else //linier non threaded.
             {
