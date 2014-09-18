@@ -28,7 +28,7 @@ namespace OrbMec2
         public OrbMecPysicsEngine()
         {
             Ticklen_ms = 0;
-            Simticklen_s = 1;
+            Simticklen_s = 10;
             Threaded = true;
             
         }
@@ -61,9 +61,9 @@ namespace OrbMec2
             if (Threaded)
             {
 
-                Task[] threadedGravTasks = new Task[count-1];
-                Task[] threadedMoveTasks = new Task[count-1];
-                for (int i = 0; i < count-1; i++)
+                Task[] threadedGravTasks = new Task[count];
+                Task[] threadedMoveTasks = new Task[count];
+                for (int i = 0; i <= count-1; i++)
                 {
                     //update grav forces in parallel
                     int index = i;
@@ -75,7 +75,7 @@ namespace OrbMec2
                 //Console.Out.WriteLine("grav done");
                 //now grav forces have been calulated we can figure out where the objecs are going to be. 
 
-                for (int i = 0; i < count - 1; i++)
+                for (int i = 0; i <= count - 1; i++)
                 {
                     int index = i;
                     threadedMoveTasks[i] = (Task.Factory.StartNew(() => SpaceObjects[index].Move(simticklen_s)));
@@ -87,14 +87,14 @@ namespace OrbMec2
             }
             else //linier non threaded.
             {
-                for (int i = 0; i < count-1; i++)
+                for (int i = 0; i <= count-1; i++)
                 {
                     //update grav forces.
                     SpaceObjects[i].GravEffect(SpaceObjects, i);              
                 }
 
                 //now grav forces have been calulated we can figure out where the objecs are going to be. 
-                for (int i = 0; i < count - 1; i++)
+                for (int i = 0; i <= count - 1; i++)
                 {
                     SpaceObjects[i].Move(simticklen_s);//physics move
                 }
